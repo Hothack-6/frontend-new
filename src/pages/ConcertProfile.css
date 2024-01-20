@@ -1,0 +1,166 @@
+/*rubik one font*/
+@import url('https://fonts.googleapis.com/css?family=Rubik+One&display=swap');
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color: #fff;
+  font-family: 'Rubik One', sans-serif;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #161616;
+}
+
+.main-image {
+  flex-grow: 1;
+  align-items: center;
+}
+
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.content {
+  text-align: left;
+  max-width: 800px;
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  width: 100%;
+  padding: 1em;
+}
+
+.title {
+  font-size: 5vh;
+  align-self: flex-start;
+  color: #FFF;
+  -webkit-text-stroke: 1px #00F0FF;
+}
+
+.ticket-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ticket-count {
+  margin: 0 1em;
+}
+
+.book-now {
+  background-color: #00F0FF;
+  color: white;
+  border: none;
+  padding: 1em 2em;
+  cursor: pointer;
+}
+
+.nft-info {
+  font-size: 0.8em;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #00F0FF;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.location {
+  text-align: left;
+  flex-grow: 1;
+}
+
+.datetime {
+  flex-grow: 2;
+  text-align: center;
+}
+
+.price {
+  text-align: right;
+  flex-grow: 1;
+}
+
+
+/*payment page */
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  /* Adjust as needed */
+  align-items: center;
+  gap: 20px;
+  /* Spacing between form items */
+}
+
+.payment-form label {
+  align-self: flex-start;
+}
+
+.payment-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 2px solid #00F0FF;
+  background-color: transparent;
+  color: #FFF;
+  outline: none;
+}
+
+.expiry-cvv-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.expiry-date,
+.cvv {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 48%;
+}
+
+.ticket-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-top: 2px solid #00F0FF;
+  border-bottom: 2px solid #00F0FF;
+  padding: 10px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.back-button,
+.pay-now {
+  background-color: #00F0FF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 48%;
+}

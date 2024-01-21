@@ -1,0 +1,90 @@
+/*rubik one font*/
+@import url("https://fonts.googleapis.com/css?family=Rubik+One&display=swap");
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	color: #fff;
+	background-color: #161616;
+	font-family: "Rubik One", sans-serif;
+}
+
+.page-container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	background-color: #161616;
+}
+
+.main-image {
+	flex-grow: 1;
+	align-items: center;
+}
+
+.content-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	padding: 20px;
+}
+
+.content {
+	text-align: left;
+	max-width: 800px;
+	width: 100%;
+}
+
+.actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 800px;
+	width: 100%;
+	padding: 1em;
+}
+
+.mint {
+	background-color: #00f0ff;
+	color: white;
+	border: none;
+	padding: 1em 2em;
+	cursor: pointer;
+}
+
+.image-container {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+a {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.concert-image {
+	object-fit: center;
+	width: 300px;
+	margin-top: 20px;
+}
+
+.mint:disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+.wallet-input {
+    padding: 5px;
+    color: #000;
+    width: 300px;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.thank-you{
+    text-align: center;
+}

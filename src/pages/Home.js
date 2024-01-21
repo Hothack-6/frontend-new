@@ -18,6 +18,11 @@ const GET_CONCERTS = gql`
 export default function Home() {
   const { loading, error, data } = useQuery(GET_CONCERTS);
 
+  console.log(process.env.REACT_APP_BACKEND);
+  
+  console.log(process.env.REACT_APP_FRONTEND)
+
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
   if (!data) return <p>No data</p>;

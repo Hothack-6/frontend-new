@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank -- I am the captain now */
 import React, { useState } from "react";
 import "./Mint.css";
 import { gql, useQuery } from "@apollo/client";
@@ -69,7 +70,9 @@ const Mint = () => {
 						We would like to offer a FREE collectible NFT to remember your
 						experience with. To claim, please make sure you have a wallet. If
 						you do not have a wallet, we recommend installing{" "}
-						<a href="https://metamask.io/download/">Metamask.</a>
+						<a target="_blank" href="https://metamask.io/download/">
+							Metamask.
+						</a>
 					</p>
 				</div>
 				{hasClaimed ? (
@@ -77,13 +80,17 @@ const Mint = () => {
 						<p>Thank you for claiming your NFT!</p>
 						<p>
 							<a
+								target="_blank"
 								href={`https://testnets.opensea.io/assets/arbitrum-sepolia/0x9ebcfbd21ba17c17a24af0b364c65454e1ee406f/${concertData.token_id}`}
 							>
 								View on OpenSea
 							</a>
 						</p>
 						<p>
-							<a href="https://sepolia.arbiscan.io/address/0x9ebcfbd21ba17c17a24af0b364c65454e1ee406f">
+							<a
+								target="_blank"
+								href="https://sepolia.arbiscan.io/address/0x9ebcfbd21ba17c17a24af0b364c65454e1ee406f"
+							>
 								View Transaction
 							</a>
 						</p>

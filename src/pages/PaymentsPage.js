@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useForm } from 'react-hook-form';
-import { useQuery, gql, useApolloClient } from '@apollo/client';
+import { useQuery, gql, useApolloClient, useMutation } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Login } from '../components/Login';
 
@@ -14,9 +14,25 @@ const GET_CONCERT_DETAILS = gql`
       price
       base_image
       description
+      available_tickets
     }
   }
 `;
+
+const PurchaseTickets = gql`
+    mutation purchaseTickets($ticketInfo: CreateTicketInput) {
+        purchaseTicket(ticketInfo: $ticketInfo) {
+            _id
+        }
+    }
+`;
+
+const CreateUser = gql`
+    mutation createUser($user: CreateUserInput!) {
+        createUser(user: $user){
+            _id
+        }
+    }`
 
 export const PaymentsPage = () => {
   const { concert_id } = useParams();
@@ -33,10 +49,28 @@ export const PaymentsPage = () => {
   const { data, loading, error } = useQuery(GET_CONCERT_DETAILS, {
     variables: { concertId: concert_id },
   });
+  const [purchaseTickets] = useMutation(PurchaseTickets);
+  const [createUser] = useMutation(CreateUser);
 
   const onSubmit = async (formData) => {
     setIsSubmitting(true);
     console.log(formData);
+    const dbUser = await createUser({
+        variables: {
+            user: {
+                email: user.email,
+                first_name: user.given_name
+            }
+        }
+    })
+    const purchasedTickets = await purchaseTickets({
+        variables: {
+            ticketInfo: {
+                user_id: dbUser.data.createUser._id,
+                concert_id
+            }
+        }
+    })
     // Simulate a payment processing delay
     setTimeout(() => {
       setIsSubmitting(false);
@@ -48,6 +82,7 @@ export const PaymentsPage = () => {
     if (user) {
       setValue('email', user.email);
       setValue('name', user.name);
+
     }
   }, [setValue, user, loading]);
 
@@ -57,6 +92,14 @@ export const PaymentsPage = () => {
 
   // Accessing the concert details from the data object
   const { name, price } = data.concertByID;
+
+
+
+  const goBack = (event) => {
+    event.preventDefault();
+    navigate(`/concert/${concert_id}`);
+  };
+
 
   return (
     <div className="payment-container">
@@ -112,7 +155,7 @@ export const PaymentsPage = () => {
             <span className="ticket-price">${price.toFixed(2)}</span>
           </div>
           <div className="form-actions">
-            <button type="button" className="back-button">Back</button>
+            <button type="button" className="back-button" onClick={goBack}>Back</button>
             <button type="submit" className="pay-now" disabled={isSubmitting}>
               {isSubmitting ? 'Processing...' : 'Pay Now'}
             </button>

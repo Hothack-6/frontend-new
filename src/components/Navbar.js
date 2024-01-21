@@ -5,8 +5,8 @@ import { Login } from "./Login";
 export default function NavBar() {
   return (
     <section>
-      <header className="flex justify-between p-4">
-        <main className="flex gap-8">
+      <header className="flex justify-between items-center p-4">
+        <main className="flex items-center gap-8">
           <img
             src="/logo.png"
             alt="NFTIX logo"
@@ -14,7 +14,7 @@ export default function NavBar() {
             height={103}
             className="self-start"
           />
-          <h3>NFTix</h3>
+          <h3 className="navbarTitle">NFTix</h3>
         </main>
         <Login />
       </header>

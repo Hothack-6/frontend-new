@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import "./ConcertProfile.css"
 import ConcertCard from "../components/ConcertCard";
 
 const GET_CONCERTS = gql`
@@ -20,9 +21,11 @@ export default function Home() {
 
   return (
     <article>
-      <h1>Book your concert</h1>
+      <div className="listDisplay">
+      <h1 className="title2">Book your concert</h1>
       <p>Show Results for: Brisbane</p>
-      <section>
+      </div>
+      <section className="concertList">
         {data.concerts.map((concertData, key) => (
           <ConcertCard key={key} concertData={concertData} />
         ))}

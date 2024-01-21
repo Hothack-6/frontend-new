@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank -- I am the captain now */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Mint.css";
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
@@ -7,30 +7,27 @@ import { format } from "date-fns";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const GET_CONCERTS_BY_ID = gql`
-	query concertsByID($_id: ID!) {
-		concertByID(_id: $_id) {
+	query concertTicketsByID($_id: ID!) {
+		concertTicketsByID(_id: $_id) {
 			_id
-			name
-			start
-			artist
-			description
-			base_image
-			token_id
-		}
-	}
-`;
-
-const GET_USER_BY_EMAIL = gql`
-	query userByEmail($email: STRING!) {
-		userByEmail(email: $email) {
-			email
+			User {
+				first_name
+				wallet_address
+			}
+			Concert {
+				name
+				artist
+				start
+				base_image
+				token_id
+			}
 		}
 	}
 `;
 
 const Mint = () => {
 	// Concert ID from URL
-	const { concert_id } = useParams();
+	const { ticket_id } = useParams();
 	const { user } = useAuth0();
 	const [userWallet, setUserWallet] = useState();
 	const [isMinting, setIsMinting] = useState(false);
@@ -39,11 +36,21 @@ const Mint = () => {
 	// Load concert by id
 	const { loading, error, data } = useQuery(GET_CONCERTS_BY_ID, {
 		variables: {
-			_id: concert_id,
+			_id: ticket_id,
 		},
 	});
 
-	const concertData = data?.concertByID;
+	const concertData = data?.concertTicketsByID.Concert;
+	const userData = data?.concertTicketsByID.User;
+
+	useEffect(() => {
+		if(!userData || !userData.wallet_address){
+			return;
+		}
+		if (userData.wallet_address) {
+			setUserWallet(userData.wallet_address);
+		}
+	}, [userData]);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error : {error.message}</p>;
@@ -63,13 +70,12 @@ const Mint = () => {
 			</div>
 			<div className="content-container">
 				<div className="content">
-					<h1 className="title">
-						We hope you enjoyed {concertData.name} on {startDateTime}!
-					</h1>
+					<h1 className="title">Hello {userData.first_name}!</h1>
 					<p className="description">
-						We would like to offer a FREE collectible NFT to remember your
-						experience with. To claim, please make sure you have a wallet. If
-						you do not have a wallet, we recommend installing{" "}
+						We hope you enjoyed {concertData.name} on {startDateTime}! We would
+						like to offer a FREE collectible NFT to remember your experience
+						with. To claim, please make sure you have a wallet. If you do not
+						have a wallet, we recommend installing{" "}
 						<a target="_blank" href="https://metamask.io/download/">
 							Metamask.
 						</a>

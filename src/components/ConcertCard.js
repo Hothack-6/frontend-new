@@ -7,19 +7,31 @@ export default function ConcertCard(props) {
   const { concertData } = props;
   const concertLink = `/concert/${concertData._id}`;
 
+  const newStartDate = Intl.DateTimeFormat("en-au", {
+    dateStyle: "medium",
+    timeStyle: "short"
+  }).format(concertData.start)
   return (
     <div>
-      <Link to={concertLink}>
+      <Link to={concertLink} className="concertCard">
+      <div className="cardContent">
+      <h3 className="concertName">{concertData.name}</h3>
+      <h3 className="concertInfo">{concertData.artist}</h3>
+      <div className="datecostField">
+      <p className="dateTime">{newStartDate}</p>
+      <p className="price">${concertData.price}pp</p>
+      </div>
+      </div>
         <img
           src={concertData.base_image}
           alt="Image of {concertData.artist}"
+          width={80}
+          height={80}
+          alt={`Image of ${concertData.artist}`}
           width={200}
           height={200}
           className="cover"
         />
-        <h3>{concertData.name}</h3>
-        <h3>{concertData.artist}</h3>
-        <p>{concertData.start}</p>
       </Link>
     </div>
   );

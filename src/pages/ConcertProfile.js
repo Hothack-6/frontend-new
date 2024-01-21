@@ -8,6 +8,12 @@ const GET_CONCERTS_BY_ID = gql`
     concertByID(_id: $_id) {
       _id
       name
+      start
+      price
+      available_tickets
+      base_image
+      description
+      end
     }
   }
 `;
@@ -36,7 +42,7 @@ const ConcertProfile = () => {
   };
 
   // Parse and format the start date
-  const startDateTime = new Date(data.start);
+  const startDateTime = new Date(data.concertByID.start);
   const uiFriendlyStart = startDateTime.toLocaleString("en-AU", {
     timeZone: "Australia/Brisbane",
     weekday: "short",
@@ -47,8 +53,11 @@ const ConcertProfile = () => {
     minute: "2-digit",
   });
 
+  // Boolean to determine if concert is SOLD OUT
+  const soldOut = data.concertByID.available_tickets < 1000
+  
   const backgroundImageStyle = {
-    backgroundImage: `url('${data.base_image}')`,
+    backgroundImage: `url('${data.concertByID.base_image}')`,
   };
 
   return (
@@ -56,21 +65,22 @@ const ConcertProfile = () => {
       <div className="main-image" style={backgroundImageStyle}></div>
       <div className="content-container">
         <div className="content">
-          <h1 className="title">{data.name}</h1>
-          <p className="description">{data.artist}</p>
-          <p className="description">{data.description}</p>
+          <h1 className="title">{data.concertByID.name}</h1>
+          <p className="description">{data.concertByID.artist}</p>
+          <p className="description">{data.concertByID.description}</p>
           <div className="details">
-            <span className="location">{data.location}</span>
+            <span className="location">Brisbane</span>
             <span className="datetime">{uiFriendlyStart}</span>
-            <span className="price">${data.price}pp</span>
+            <span className="price">${data.concertByID.price}pp</span>
           </div>
         </div>
         <div className="actions">
-          <div className="ticket-selector">
+          <div className={soldOut ? "hidden" : "ticket-selector"}>
             <button onClick={() => handleTicketCountChange(false)}>-</button>
             <span className="ticket-count">{ticketCount}</span>
             <button onClick={() => handleTicketCountChange(true)}>+</button>
           </div>
+          <p className={soldOut ? "soldOut" : "hidden"}>SOLD OUT</p>
           <button className="book-now">BOOK NOW</button>
         </div>
         <p className="nft-info">

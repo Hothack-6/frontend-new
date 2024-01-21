@@ -8,6 +8,7 @@ import ConcertProfile from "./pages/ConcertProfile";
 import NavBar from "./components/Navbar";
 import { AuthProvider } from "./components/AuthProvider";
 import Mint from "./pages/Mint";
+import { ConfirmTicket } from "./pages/ConfirmTicket";
 
 export default function App() {
 	const client = new ApolloClient({
@@ -23,6 +24,7 @@ export default function App() {
 						<Route index element={<Home />} />
 						<Route path="/concert/:concert_id" element={<ConcertProfile />} />
 						<Route path="/mint/:concert_id" element={<Mint />} />
+						<Route path="/concert-tickets/:ticket_id" element={<ConfirmTicket />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

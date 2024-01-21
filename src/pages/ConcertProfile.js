@@ -114,7 +114,7 @@ const ConcertProfile = () => {
             <button onClick={() => handleTicketCountChange(true)}>+</button>
           </div>
           <p className={soldOut ? "soldOut" : "hidden"}>SOLD OUT</p>
-          <button className="book-now" onClick={handleSubmit}>BOOK NOW</button>
+          <button className={soldOut ? "hidden" : "book-now"} onClick={handleSubmit}>BOOK NOW</button>
         </div>
         <p className="nft-info">
           With each ticket you receive an event unique NFT to accredit your

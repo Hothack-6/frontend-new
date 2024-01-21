@@ -56,7 +56,7 @@ const ConcertProfile = () => {
   });
 
   // Boolean to determine if concert is SOLD OUT
-  const soldOut = data.concertByID.available_tickets < 1000;
+  const soldOut = data.concertByID.available_tickets < 1;
   
   const backgroundImageStyle = {
     backgroundImage: `url('${data.concertByID.base_image}')`,

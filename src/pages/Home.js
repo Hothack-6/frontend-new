@@ -16,6 +16,7 @@ const GET_CONCERTS = gql`
 `;
 
 export default function Home() {
+  console.log(process.env.AUTH0_BASE_URL='https://frontend-new-seven.vercel.app/')
   const { loading, error, data } = useQuery(GET_CONCERTS);
 
   if (loading) return <p>Loading...</p>;

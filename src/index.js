@@ -22,7 +22,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/concert/:concert_id" element={<ConcertProfile />} />
-            {/* <Route path="/payments" element={<PaymentsPage/>}/> */}
+            {/* <Route path="/payments/:concert_id" element={<PaymentsPage/>}/> */}
           </Route>
         </Routes>
       </BrowserRouter>

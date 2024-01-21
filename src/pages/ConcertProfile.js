@@ -77,7 +77,7 @@ const ConcertProfile = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isAuthenticated && user ) {
-      navigate("/payments")
+      navigate(`/payments/${concert_id}`)
       // purchaseTickets(
       //   { variables: { 
       //     ticketInfo: {

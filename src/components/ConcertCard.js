@@ -18,8 +18,8 @@ export default function ConcertCard(props) {
       <h3 className="concertName">{concertData.name}</h3>
       <h3 className="concertInfo">{concertData.artist}</h3>
       <div className="datecostField">
-      <p>{newStartDate}</p>
-      <p>{concertData.price}</p>
+      <p className="dateTime">{newStartDate}</p>
+      <p className="price">${concertData.price}pp</p>
       </div>
       </div>
         <img

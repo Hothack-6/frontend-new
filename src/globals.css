@@ -95,13 +95,11 @@ html {
 }
 
 .datetime {
-  flex-grow: 2;
-  text-align: center;
+  margin-right: 10px;
 }
-
 .price {
-  text-align: right;
-  flex-grow: 1;
+  font-size: 1.2rem; /* Making the price text a bit larger */
+  color: #ffffff; /* Making price color stand out, adjust as needed */
 }
 
 /*payment page */
@@ -189,55 +187,51 @@ html {
 
 .concertCard {
   display: flex;
-  flex-direction: row; /* Image and content side by side */
+  flex-direction: row;
   align-items: center;
-  justify-content: start; /* Align content to the start */
+  justify-content: space-between;
   border: 2px solid #00F0FF;
   margin-bottom: 1rem;
   padding: 1rem;
-  width: 80%; /* Set width to maintain same size for all cards */
-  width: 700px;
-  margin-left: auto; /* Center the card */
-  margin-right: auto; /* Center the card */
-  box-sizing: border-box; /* Include padding and border in the width */
+  width: 700px; /* Ensuring all cards have the same width */
+  max-width: 100%; /* Ensure it doesn't exceed the screen width on smaller devices */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
-
 .cardContent {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start; /* Align content to the start */
-  flex: 1; /* Allow the content to grow and fill the space */
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-grow: 1; /* Allows the content to expand and fill the space */
+  margin-right: 20px; /* Spacing between content and image */
 }
 .cover {
-  /* Ensure the image does not stretch disproportionately */
-  width: 80px; /* Set a fixed width for the image */
-  height: 80px; /* Set a fixed height for the image */
-  object-fit: cover; /* Ensure the image covers the area, might crop */
-  order: 2; /* Put the image after the content in the flex container */
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  align-self: center; /* Aligns the image centrally to the content if the card is in row direction */
 }
 /* Responsive adjustments for mobile devices */
-@media (max-width: 768px) { /* Adjust for smaller screens */
+@media (max-width: 768px) {
   .concertCard {
-    flex-direction: column; /* Stack image and content on small screens */
-    align-items: center; /* Center content */
-    width: 90%; /* Allow cards to expand to the full width */
-    max-width: none; /* Remove max-width restriction */
+    flex-direction: column;
+    width: 90%; /* Slightly smaller on mobile for some padding */
   }
 
   .cardContent {
-    align-items: center; /* Center content on small screens */
-    text-align: center; /* Center text */
     order: 1; /* Ensure content is above the image */
   }
 
   .cover {
     order: 2; /* Ensure the image is below the content */
+    width: 100%; /* Full width images on mobile */
+    height: auto; /* Keep the aspect ratio of the image */
   }
 
   .datecostField {
-    flex-direction: column; /* Stack date and cost */
-    align-items: center; /* Center date and cost */
+    flex-direction: column; /* Stack date and price on mobile */
   }
 }
 .concertName {
@@ -279,4 +273,8 @@ html {
   font-size: 5vh;
   align-self: flex-start;
   color: #FFF; 
+}
+.soldOut {
+  color: #FF3131;
+  font-size: 20px;
 }

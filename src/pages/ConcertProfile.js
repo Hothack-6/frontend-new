@@ -80,7 +80,7 @@ const ConcertProfile = () => {
             <span className="ticket-count">{ticketCount}</span>
             <button onClick={() => handleTicketCountChange(true)}>+</button>
           </div>
-          <p className={soldOut ? "" : "hidden"}>Sold Out</p>
+          <p className={soldOut ? "soldOut" : "hidden"}>SOLD OUT</p>
           <button className="book-now">BOOK NOW</button>
         </div>
         <p className="nft-info">

@@ -1,8 +1,280 @@
+/*rubik one font*/
+@import url('https://fonts.googleapis.com/css?family=Rubik+One&display=swap');
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color: #fff;
+  background-color: #161616; /* Kept from the first file */
+  font-family: 'Rubik One', sans-serif;
+}
+
 .cyan_thin_border {
   border-color: #00F0FF;
   border-bottom-width: 1px;
 }
 
-.background_color {
-  background-color: #292929;
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #161616; /* Kept from the first file */
+}
+
+.main-image {
+  flex-grow: 1;
+  align-items: center;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.content {
+  text-align: left;
+  max-width: 800px; 
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px; 
+  width: 100%;
+  padding: 1em;
+}
+
+.title {
+  font-size: 5vh;
+  align-self: flex-start;
+  color: #FFF; 
+  -webkit-text-stroke: 1px #00F0FF;
+}
+
+.ticket-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ticket-count {
+  margin: 0 1em;
+}
+
+.book-now {
+  background-color: #00F0FF;
+  color: white;
+  border: none;
+  padding: 1em 2em;
+  cursor: pointer;
+}
+
+.nft-info {
+  font-size: 0.8em;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #00F0FF;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.location {
+  text-align: left;
+  flex-grow: 1;
+}
+
+.datetime {
+  margin-right: 10px;
+}
+.price {
+  font-size: 1.2rem; /* Making the price text a bit larger */
+  color: #ffffff; /* Making price color stand out, adjust as needed */
+}
+
+/*payment page */
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  align-items: center;
+  gap: 20px;
+}
+
+.payment-form label {
+  align-self: flex-start;
+}
+
+.payment-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 2px solid #00F0FF;
+  background-color: transparent;
+  color: #FFF;
+  outline: none;
+}
+
+.expiry-cvv-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.expiry-date,
+.cvv {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 48%;
+}
+
+.ticket-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-top: 2px solid #00F0FF;
+  border-bottom: 2px solid #00F0FF;
+  padding: 10px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.back-button,
+.pay-now {
+  background-color: #00F0FF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 48%;
+}
+
+.mainContent {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.navbarTitle {
+  font-size: 3rem;
+}
+
+/* Newly added or conflicting classes merged below */
+
+.concertCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #00F0FF;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  width: 700px; /* Ensuring all cards have the same width */
+  max-width: 100%; /* Ensure it doesn't exceed the screen width on smaller devices */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-grow: 1; /* Allows the content to expand and fill the space */
+  margin-right: 20px; /* Spacing between content and image */
+}
+.cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  align-self: center; /* Aligns the image centrally to the content if the card is in row direction */
+}
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) {
+  .concertCard {
+    flex-direction: column;
+    width: 90%; /* Slightly smaller on mobile for some padding */
+  }
+
+  .cardContent {
+    order: 1; /* Ensure content is above the image */
+  }
+
+  .cover {
+    order: 2; /* Ensure the image is below the content */
+    width: 100%; /* Full width images on mobile */
+    height: auto; /* Keep the aspect ratio of the image */
+  }
+
+  .datecostField {
+    flex-direction: column; /* Stack date and price on mobile */
+  }
+}
+.concertName {
+  font-size: 1.5rem;
+  color: #FFF;
+  -webkit-text-stroke: 1px #00F0FF;
+}
+
+.concertInfo {
+  font-size: 1rem;
+  color: #FFF;
+  display: flex;
+}
+
+.concertList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.datecostField {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 10px;
+}
+
+.imageRe {
+  margin-left: 100px;
+}
+
+.listDisplay {
+  text-align: center;
+  padding: 10px;
+}
+.title2 {
+  font-size: 5vh;
+  align-self: flex-start;
+  color: #FFF; 
+}
+.soldOut {
+  color: #FF3131;
+  font-size: 20px;
 }

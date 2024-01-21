@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./ConcertProfile.css";
 import { gql, useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom";
 
 const GET_CONCERTS_BY_ID = gql`
   query concertsByID($_id: ID!) {
@@ -20,32 +19,21 @@ const GET_CONCERTS_BY_ID = gql`
   }
 `;
 
-// const PurchaseTickets = gql`
-// mutation purchaseTickets($ticketInfo: CreateTicketInput) {
-//   purchaseTicket(ticketInfo: $ticketInfo) {
-//     _id
-//   }
-// }`
-
 const ConcertProfile = () => {
-  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-  // const [purchaseTickets, mutationReturn] = useMutation(PurchaseTickets);
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   const [ticketCount, setTicketCount] = useState(1);
   const navigate = useNavigate();
-  // Concert ID from URL
   const { concert_id } = useParams();
 
-  // Load concefrt by id
+  // Load concert by id
   const { loading, error, data } = useQuery(GET_CONCERTS_BY_ID, {
     variables: {
       _id: concert_id,
     },
   });
 
-
-
-  if (loading ) return <p>Loading...</p>;
-  if (error ) return <p>Error : {error.message }</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
   if (!data) return <p>No data</p>;
 
   // Function to handle ticket count change
@@ -68,7 +56,7 @@ const ConcertProfile = () => {
   });
 
   // Boolean to determine if concert is SOLD OUT
-  const soldOut = data.concertByID.available_tickets < 1000
+  const soldOut = data.concertByID.available_tickets < 1000;
   
   const backgroundImageStyle = {
     backgroundImage: `url('${data.concertByID.base_image}')`,
@@ -76,22 +64,12 @@ const ConcertProfile = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (isAuthenticated && user ) {
-      navigate(`/payments/${concert_id}`)
-      // purchaseTickets(
-      //   { variables: { 
-      //     ticketInfo: {
-      //       user_id: "65ab4cf4747e9c24531475a7", 
-      //       concert_id
-      //     }
-      //   }
-      // }
-      // )
+    if (isAuthenticated) {
+      navigate(`/payments/${concert_id}`);
+    } else {
+      loginWithRedirect();
     }
-    else {
-      loginWithRedirect()
-    }
-  }
+  };
 
   return (
     <div className="page-container">

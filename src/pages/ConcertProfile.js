@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ConcertProfile.css";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
@@ -20,18 +20,16 @@ const GET_CONCERTS_BY_ID = gql`
   }
 `;
 
-
-
-const PurchaseTickets = gql`
-mutation purchaseTickets($ticketInfo: CreateTicketInput) {
-  purchaseTicket(ticketInfo: $ticketInfo) {
-    _id
-  }
-}`
+// const PurchaseTickets = gql`
+// mutation purchaseTickets($ticketInfo: CreateTicketInput) {
+//   purchaseTicket(ticketInfo: $ticketInfo) {
+//     _id
+//   }
+// }`
 
 const ConcertProfile = () => {
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-  const [purchaseTickets, mutationReturn] = useMutation(PurchaseTickets);
+  // const [purchaseTickets, mutationReturn] = useMutation(PurchaseTickets);
   const [ticketCount, setTicketCount] = useState(1);
   const navigate = useNavigate();
   // Concert ID from URL
@@ -46,8 +44,8 @@ const ConcertProfile = () => {
 
 
 
-  if (loading || mutationReturn.loading ) return <p>Loading...</p>;
-  if (error || mutationReturn.error ) return <p>Error : {error.message || mutationReturn.error}</p>;
+  if (loading ) return <p>Loading...</p>;
+  if (error ) return <p>Error : {error.message }</p>;
   if (!data) return <p>No data</p>;
 
   // Function to handle ticket count change
@@ -79,7 +77,7 @@ const ConcertProfile = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isAuthenticated && user ) {
-      navigate("")
+      navigate("/payments")
       // purchaseTickets(
       //   { variables: { 
       //     ticketInfo: {

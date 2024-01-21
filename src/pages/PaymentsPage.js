@@ -67,7 +67,6 @@ export const PaymentsPage = () => {
   const { name, price } = data.concertByID;
 
   const onSubmit = async (event) => {
-    console.log(data.concertByID.available_tickets)
     const dbUser = await createUser({
         variables: {
             user: {
@@ -76,7 +75,7 @@ export const PaymentsPage = () => {
             }
         }
     })
-    purchaseTickets({
+    const purchasedTickets = await purchaseTickets({
         variables: {
             ticketInfo: {
                 user_id: dbUser.data.createUser._id,
@@ -84,7 +83,6 @@ export const PaymentsPage = () => {
             }
         }
     })
-    console.log(data.concertByID.available_tickets)
   };
 
   const goBack = (event) => {

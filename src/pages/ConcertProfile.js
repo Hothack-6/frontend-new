@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./ConcertProfile.css";
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 const GET_CONCERTS_BY_ID = gql`
   query concertsByID($_id: ID!) {
@@ -18,7 +20,18 @@ const GET_CONCERTS_BY_ID = gql`
   }
 `;
 
+// const PurchaseTickets = gql`
+// mutation purchaseTickets($ticketInfo: CreateTicketInput) {
+//   purchaseTicket(ticketInfo: $ticketInfo) {
+//     _id
+//   }
+// }`
+
 const ConcertProfile = () => {
+  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+  // const [purchaseTickets, mutationReturn] = useMutation(PurchaseTickets);
+  const [ticketCount, setTicketCount] = useState(1);
+  const navigate = useNavigate();
   // Concert ID from URL
   const { concert_id } = useParams();
 
@@ -28,10 +41,11 @@ const ConcertProfile = () => {
       _id: concert_id,
     },
   });
-  const [ticketCount, setTicketCount] = useState(1);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+
+
+  if (loading ) return <p>Loading...</p>;
+  if (error ) return <p>Error : {error.message }</p>;
   if (!data) return <p>No data</p>;
 
   // Function to handle ticket count change
@@ -60,6 +74,25 @@ const ConcertProfile = () => {
     backgroundImage: `url('${data.concertByID.base_image}')`,
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (isAuthenticated && user ) {
+      navigate(`/payments/${concert_id}`)
+      // purchaseTickets(
+      //   { variables: { 
+      //     ticketInfo: {
+      //       user_id: "65ab4cf4747e9c24531475a7", 
+      //       concert_id
+      //     }
+      //   }
+      // }
+      // )
+    }
+    else {
+      loginWithRedirect()
+    }
+  }
+
   return (
     <div className="page-container">
       <div className="main-image" style={backgroundImageStyle}></div>
@@ -81,7 +114,7 @@ const ConcertProfile = () => {
             <button onClick={() => handleTicketCountChange(true)}>+</button>
           </div>
           <p className={soldOut ? "soldOut" : "hidden"}>SOLD OUT</p>
-          <button className="book-now">BOOK NOW</button>
+          <button className={soldOut ? "hidden" : "book-now"} onClick={handleSubmit}>BOOK NOW</button>
         </div>
         <p className="nft-info">
           With each ticket you receive an event unique NFT to accredit your

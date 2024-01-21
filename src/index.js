@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import ConcertProfile from "./pages/ConcertProfile";
 import NavBar from "./components/Navbar";
 import { AuthProvider } from "./components/AuthProvider";
+import PaymentForm from "./components/PaymentForm";
 
 export default function App() {
   const client = new ApolloClient({
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/concert/:concert_id" element={<ConcertProfile />} />
+            <Route path="/payments" element={<PaymentForm/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

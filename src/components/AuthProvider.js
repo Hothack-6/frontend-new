@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => (
     domain={"https://hothack2.au.auth0.com"}
     clientId={"VxM75q1Qa1OqjzR4PusNr27FPzVkngn8"}
     authorizationParams={{
-      redirect_uri: process.env.REACT_APP_FRONTEND,
+      redirect_uri: process.env.REACT_APP_FRONTEND || "http://localhost:3000",
     }}
   >
     {children}

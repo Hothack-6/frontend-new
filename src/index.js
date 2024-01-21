@@ -13,7 +13,7 @@ import { ConfirmTicket } from "./pages/ConfirmTicket";
 
 export default function App() {
 	const client = new ApolloClient({
-		uri: process.env.REACT_APP_BACKEND,
+		uri: process.env.REACT_APP_BACKEND || "http://localhost:8000/graphql",
 		cache: new InMemoryCache(),
 	});
 

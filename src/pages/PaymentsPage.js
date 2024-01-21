@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useForm } from 'react-hook-form';
-import { useQuery, gql } from '@apollo/client';
-import { useParams } from 'react-router-dom';
+import { useQuery, gql, useApolloClient } from '@apollo/client';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Login } from '../components/Login';
 
 // GraphQL query to fetch concert details by ID
@@ -20,7 +20,10 @@ const GET_CONCERT_DETAILS = gql`
 
 export const PaymentsPage = () => {
   const { concert_id } = useParams();
+  const navigate = useNavigate();
+  const client = useApolloClient();
   const { user } = useAuth0();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -31,7 +34,15 @@ export const PaymentsPage = () => {
     variables: { concertId: concert_id },
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (formData) => {
+    setIsSubmitting(true);
+    console.log(formData);
+    // Simulate a payment processing delay
+    setTimeout(() => {
+      setIsSubmitting(false);
+      navigate(`/concert/${concert_id}`, { state: { paymentSuccess: true } }); // Pass state to indicate payment was successful
+    }, 2000);
+  };
 
   useEffect(() => {
     if (user) {
@@ -51,6 +62,12 @@ export const PaymentsPage = () => {
     <div className="payment-container">
       {user ? (
         <form onSubmit={handleSubmit(onSubmit)} className="payment-form">
+          {/* Loading spinner shown when isSubmitting is true */}
+          {isSubmitting && (
+            <div className="loading-spinner-container">
+              <div className="loading-spinner"></div>
+            </div>
+          )}
           <h3 className="payment-title">Make a Payment for {name}</h3>
           <p className="user-email">Email: {user.email}</p>
           <input
@@ -96,13 +113,15 @@ export const PaymentsPage = () => {
           </div>
           <div className="form-actions">
             <button type="button" className="back-button">Back</button>
-            <button type="submit" className="pay-now">Pay Now</button>
+            <button type="submit" className="pay-now" disabled={isSubmitting}>
+              {isSubmitting ? 'Processing...' : 'Pay Now'}
+            </button>
           </div>
           <p className="wallet-info">
             * A wallet address is required to collect NFTs for the performances you attend.
             If you do not have a wallet, we recommend installing 
             <a href="https://metamask.io/download/" target="_blank" rel="noopener noreferrer">
-              Metamask
+               Metamask
             </a>. However, a wallet is not required to complete registration and purchase tickets.
           </p>
         </form>

@@ -7,7 +7,7 @@ html {
   padding: 0;
   height: 100%;
   color: #fff;
-  background-color: #161616; /* Kept from the first file */
+  background-color: #161616; 
   font-family: 'Rubik One', sans-serif;
 }
 
@@ -19,8 +19,8 @@ html {
 .page-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background-color: #161616; /* Kept from the first file */
+  height: 100vh;  
+  background-color: #161616; 
 }
 
 .main-image {
@@ -98,8 +98,8 @@ html {
   margin-right: 10px;
 }
 .price {
-  font-size: 1.2rem; /* Making the price text a bit larger */
-  color: #ffffff; /* Making price color stand out, adjust as needed */
+  font-size: 1.2rem; 
+  color: #ffffff;
 }
 
 /*payment page */
@@ -346,4 +346,35 @@ html {
   cursor: pointer;
 }
 
-/* Additional responsive adjustments can be added as needed */
+.loading-spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.loading-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #00ffff; /* Aqua color */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.thank-you-message {
+  font-size: 2rem; /* or whatever size you prefer */
+  color: #10ad1d; /* or whatever color you prefer */
+  text-align: center;
+  margin-top: 20px; /* Adjust as per your design */
+}

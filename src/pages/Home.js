@@ -8,6 +8,9 @@ const GET_CONCERTS = gql`
       _id
       name
       artist
+      base_image
+      start
+      price
     }
   }
 `;

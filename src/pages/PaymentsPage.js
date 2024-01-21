@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useForm } from 'react-hook-form';
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { useQuery, gql, useApolloClient, useMutation } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Login } from '../components/Login';
 
@@ -37,7 +37,9 @@ const CreateUser = gql`
 export const PaymentsPage = () => {
   const { concert_id } = useParams();
   const navigate = useNavigate();
+  const client = useApolloClient();
   const { user } = useAuth0();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -50,23 +52,9 @@ export const PaymentsPage = () => {
   const [purchaseTickets] = useMutation(PurchaseTickets);
   const [createUser] = useMutation(CreateUser);
 
-
-  useEffect(() => {
-    if (user) {
-      setValue('email', user.email);
-      setValue('name', user.name);
-
-    }
-  }, [setValue, user, loading]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  if (!data) return <p>No concert data found</p>;
-
-  // Accessing the concert details from the data object
-  const { name, price } = data.concertByID;
-
-  const onSubmit = async (event) => {
+  const onSubmit = async (formData) => {
+    setIsSubmitting(true);
+    console.log(formData);
     const dbUser = await createUser({
         variables: {
             user: {
@@ -83,7 +71,29 @@ export const PaymentsPage = () => {
             }
         }
     })
+    // Simulate a payment processing delay
+    setTimeout(() => {
+      setIsSubmitting(false);
+      navigate(`/concert/${concert_id}`, { state: { paymentSuccess: true } }); // Pass state to indicate payment was successful
+    }, 2000);
   };
+
+  useEffect(() => {
+    if (user) {
+      setValue('email', user.email);
+      setValue('name', user.name);
+
+    }
+  }, [setValue, user, loading]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!data) return <p>No concert data found</p>;
+
+  // Accessing the concert details from the data object
+  const { name, price } = data.concertByID;
+
+
 
   const goBack = (event) => {
     event.preventDefault();
@@ -95,6 +105,12 @@ export const PaymentsPage = () => {
     <div className="payment-container">
       {user ? (
         <form onSubmit={handleSubmit(onSubmit)} className="payment-form">
+          {/* Loading spinner shown when isSubmitting is true */}
+          {isSubmitting && (
+            <div className="loading-spinner-container">
+              <div className="loading-spinner"></div>
+            </div>
+          )}
           <h3 className="payment-title">Make a Payment for {name}</h3>
           <p className="user-email">Email: {user.email}</p>
           <input
@@ -140,13 +156,15 @@ export const PaymentsPage = () => {
           </div>
           <div className="form-actions">
             <button type="button" className="back-button" onClick={goBack}>Back</button>
-            <button type="submit" className="pay-now">Pay Now</button>
+            <button type="submit" className="pay-now" disabled={isSubmitting}>
+              {isSubmitting ? 'Processing...' : 'Pay Now'}
+            </button>
           </div>
           <p className="wallet-info">
             * A wallet address is required to collect NFTs for the performances you attend.
             If you do not have a wallet, we recommend installing 
             <a href="https://metamask.io/download/" target="_blank" rel="noopener noreferrer">
-              Metamask
+               Metamask
             </a>. However, a wallet is not required to complete registration and purchase tickets.
           </p>
         </form>

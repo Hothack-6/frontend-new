@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ConcertProfile.css";
 import { gql, useQuery } from "@apollo/client";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const GET_CONCERTS_BY_ID = gql`
@@ -23,9 +23,10 @@ const ConcertProfile = () => {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
   const [ticketCount, setTicketCount] = useState(1);
   const navigate = useNavigate();
+  const location = useLocation();
   const { concert_id } = useParams();
+  const paymentSuccess = location.state?.paymentSuccess;
 
-  // Load concert by id
   const { loading, error, data } = useQuery(GET_CONCERTS_BY_ID, {
     variables: {
       _id: concert_id,
@@ -36,14 +37,10 @@ const ConcertProfile = () => {
   if (error) return <p>Error : {error.message}</p>;
   if (!data) return <p>No data</p>;
 
-  // Function to handle ticket count change
   const handleTicketCountChange = (increment) => {
-    setTicketCount((prev) =>
-      increment ? prev + 1 : prev > 1 ? prev - 1 : prev
-    );
+    setTicketCount((prev) => increment ? prev + 1 : prev > 1 ? prev - 1 : prev);
   };
 
-  // Parse and format the start date
   const startDateTime = new Date(data.concertByID.start);
   const uiFriendlyStart = startDateTime.toLocaleString("en-AU", {
     timeZone: "Australia/Brisbane",
@@ -55,9 +52,8 @@ const ConcertProfile = () => {
     minute: "2-digit",
   });
 
-  // Boolean to determine if concert is SOLD OUT
   const soldOut = data.concertByID.available_tickets < 1;
-  
+
   const backgroundImageStyle = {
     backgroundImage: `url('${data.concertByID.base_image}')`,
   };
@@ -86,13 +82,17 @@ const ConcertProfile = () => {
           </div>
         </div>
         <div className="actions">
-          <div className={soldOut ? "hidden" : "ticket-selector"}>
+        <div className={soldOut ? "hidden" : "ticket-selector"}>
             <button onClick={() => handleTicketCountChange(false)}>-</button>
             <span className="ticket-count">{ticketCount}</span>
             <button onClick={() => handleTicketCountChange(true)}>+</button>
           </div>
           <p className={soldOut ? "soldOut" : "hidden"}>SOLD OUT</p>
-          <button className={soldOut ? "hidden" : "book-now"} onClick={handleSubmit}>BOOK NOW</button>
+          {paymentSuccess ? (
+            <p className="thank-you-message">THANK YOU FOR PURCHASING</p>
+          ) : (
+            <button className={soldOut ? "hidden" : "book-now"} onClick={handleSubmit}>BOOK NOW</button>
+          )}
         </div>
         <p className="nft-info">
           With each ticket you receive an event unique NFT to accredit your

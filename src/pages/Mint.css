@@ -1,16 +1,6 @@
 /*rubik one font*/
 @import url("https://fonts.googleapis.com/css?family=Rubik+One&display=swap");
 
-body,
-html {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	color: #fff;
-	background-color: #161616;
-	font-family: "Rubik One", sans-serif;
-}
-
 .page-container {
 	display: flex;
 	flex-direction: column;

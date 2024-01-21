@@ -278,3 +278,72 @@ html {
   color: #FF3131;
   font-size: 20px;
 }
+/* PaymentsPage.css */
+.payment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #161616; /* Background color */
+}
+
+.payment-form {
+  background: #202020; /* Form background color */
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 500px;
+}
+
+.payment-title {
+  color: #FFF;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.payment-input,
+.payment-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: transparent;
+  color: #FFF;
+  border: 1px solid #00F0FF;
+}
+
+.expiry-cvv {
+  display: flex;
+  justify-content: space-between;
+}
+
+.expiry,
+.cvv {
+  width: 48%;
+}
+
+.ticket-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.ticket-price {
+  font-size: 1.5rem;
+  color: #00F0FF;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.back-button,
+.pay-now {
+  padding: 10px 20px;
+  color: #FFF;
+  background-color: #00F0FF;
+  border: none;
+  cursor: pointer;
+}
+
+/* Additional responsive adjustments can be added as needed */
